@@ -1,0 +1,89 @@
+﻿@page "/"
+@using CompositePatternAndWasm.Interface
+
+<PageTitle>Home</PageTitle>
+
+<h1>Composite Pattern</h1>
+
+
+<button @onclick="CreateComposite">
+    Create Composite
+</button>
+
+<br>
+<br>
+
+<textarea @bind="Description" style="width: 2000px; height: 1500px;" />
+
+
+@code {
+    public string Description { get; set; } = string.Empty;
+
+    private void CreateComposite()
+    {
+        Description = string.Empty;
+
+            Employee mathTeacher1 = new Employee
+            {
+                Name = "M.Joy",
+                Dept = "Mathematic",
+                Designation = "Lecturer"
+            };
+            Employee mathTeacher2 = new Employee
+            {
+                Name = "M.Roony",
+                Dept ="Mathematics",
+                Designation = "Lecturer"
+            };
+
+        CompositeEmployee hodMaths = new CompositeEmployee
+            {
+                Name ="Mrs.S.Das",
+                Dept = "Maths",
+                Designation = "HOD-Maths"
+            };
+
+        hodMaths.AddEmployee(mathTeacher1);
+        hodMaths.AddEmployee(mathTeacher2);
+
+        Employee cseTeacher1 = new Employee { Name = "C.Sam", Dept ="Computer Science", Designation = "Lecturer" };
+        Employee cseTeacher2 = new Employee { Name = "C.Jones", Dept ="Computer Science.", Designation = "Lecturer" };
+        Employee cseTeacher3 = new Employee { Name = "C.Marium", Dept ="Computer Science", Designation = "Lecturer" };
+        // The college has a Head of Department in Computer science
+        CompositeEmployee hodCompSc = new CompositeEmployee { Name = "Mr.V.Sarcar", Dept = "Computer Sc.", Designation = "HOD-Computer Sc." };
+
+        hodCompSc.AddEmployee(cseTeacher1);
+        hodCompSc.AddEmployee(cseTeacher2);
+        hodCompSc.AddEmployee(cseTeacher3);
+
+        CompositeEmployee principal = new CompositeEmployee
+            {
+                Name ="Dr.S.Som",
+                Dept = "Planning-Supervising-Managing",
+                Designation = "Principal"
+            };
+
+        this.Description += "\nDetails of a Principal object is as follows:";
+    
+        principal.AddEmployee(hodMaths);
+
+        this.Description += "\nDetails of a HOD object is as follows:";
+
+        principal.AddEmployee(hodCompSc);
+
+        this.Description +="\nDetails of an individual employee(leaf node) is as follows:";
+
+        this.Description += principal.Display();
+
+        this.Description += hodCompSc.Display();
+
+        this.Description += mathTeacher1.Display();
+
+        hodCompSc.RemoveEmployee(cseTeacher2);
+
+        this.Description += "\nAfter the resignation of C.Jones, the organization has the following members:";
+
+        this.Description += principal.Display();
+
+    }
+}
