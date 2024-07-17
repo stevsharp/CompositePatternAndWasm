@@ -1,4 +1,4 @@
-# CompositePatternAndWasm
+# Composite Pattern And Wasm (Blazor WebAssembly)
 
 This repository contains a Blazor WebAssembly project demonstrating the Composite Design Pattern. The project showcases how to use the Composite pattern to manage hierarchical data structures and their interaction with Blazor components.
 
